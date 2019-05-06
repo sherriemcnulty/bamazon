@@ -14,21 +14,21 @@ function managerView() {
       type: "list",
       name: "doWhat",
       message: "What do you want to do?",
-      choices: ["View products for sale.", "View low inventory.", "Add more of an existing product.", "Add new product."]
+      choices: ["View Products For Sale", "View Low Inventory", "Add More of An Existing Product", "Add New Product"]
    }]).then(function (data) {
 
       switch (data.doWhat) {
 
-         case "View products for sale.":
+         case "View Products For Sale":
             printProductTable("all");
             break;
-         case "View low inventory.":
+         case "View Low Inventory":
             printProductTable("low");
             break;
-         case "Add more of an existing product.":
+         case "Add More of An Existing Product":
             addExisting();
             break;
-         case "Add new product.":
+         case "Add New Product":
             insertNewProduct();
             break;
       }

@@ -1,34 +1,48 @@
-var mysql = require("mysql");
-var inquirer = require("inquirer");
+require("dotenv").config();
 
-var connection = mysql.createConnection({
-   host: "localhost",
-   port: 3306,
-   user: "root",
-   password: process.env.SQL_PASSWORD,
-   database: "products_db"
-});
+let mysql = require("mysql");
+let inquirer = require("inquirer");
+let table = require("cli-table");
 
-connection.connect(function (err) {
-   if (err) throw err;
-   console.log("connected as id " + connection.threadId + "\n");
-   supervisorView(); // put start() here so nothing happens until connection success
-});
+supervisorView();
+
+function supervisorView() {
+
+   inquirer.prompt([{
+      type: "list",
+      name: "doWhat",
+      message: "What do you want to do?",
+      choices: ["View Product Sales by Department", "Create New Department"]
+   }]).then(function (data) {
+
+      switch (data.doWhat) {
+
+         case "View Product Sales by Department":
+            viewSalesByDepartment();
+            break;
+         case "Create New Department":
+            createNewDepartment();
+            break;
+         default:
+            console.log("Oops! Invalid option.");
+            break;
+      }
+   });
+}
+
+function viewSalesByDepartment() {
+
+   console.log("View sales by department.");
+}
+
+function createNewDepartment() {
+
+   console.log("Create new department");
+}
 
 /* -----------------------------------------------------------------------
 // SUPERVISOR VIEW
 /* -----------------------------------------------------------------------
-1) Create a new MySQL table called departments.Your table should include the following columns:
-   - department_id
-   - department_name
-   - over_head_costs(A dummy number you set for each department)
-
-2) Modify the products table so that there 's a product_sales column, and modify your bamazonCustomer.js app so that when a customer purchases anything from the store, the price of the product multiplied by the quantity purchased is added to the product's product_sales column.
-4) Make sure your app still updates the inventory listed in the products column.
-
-5) Create another Node app called bamazonSupervisor.js.Running this application will list a set of menu options:
-   - View Product Sales by Department
-   - Create New Department
 
 6) When a supervisor selects View Product Sales by Department, the app should display a summarized table in their terminal / bash window. Use the table below as a guide.
 
