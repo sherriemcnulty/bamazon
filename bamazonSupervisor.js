@@ -18,7 +18,7 @@ function supervisorView() {
       switch (data.doWhat) {
 
          case "View Product Sales by Department":
-            printDepartmentsTable();
+            printSubervisorTable();
             break;
          case "Create New Department":
             createNewDepartment();
@@ -31,7 +31,7 @@ function supervisorView() {
 } // supervisorView()
 
 
-function printDepartmentsTable() {
+function printSupervisorTable() {
 
    let productTable = []; // will be loaded to print table
 
@@ -53,7 +53,7 @@ function printDepartmentsTable() {
    });
 
    // Extract total sales for each department from the products table.
-   let sqlCommand = `SELECT departments.id, departments.department_name, departments.over_head_cost, SUM(products.product_sales) AS sales
+   let sqlCommand = `SELECT departments.id, departments.department_name, departments.over_head_cost, SUM(products.products_sold) AS sales
                      FROM products
                      INNER JOIN departments USING(department_name)
                      GROUP BY department_name;`
@@ -84,7 +84,7 @@ function printDepartmentsTable() {
       connection.end();
 
    });
-} // printDepartmentsTable()
+} // printSubervisorTable()
 
 function createNewDepartment() {
 
