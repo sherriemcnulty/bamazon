@@ -18,10 +18,10 @@ function supervisorView() {
       switch (data.doWhat) {
 
          case "View Product Sales by Department":
-            viewSalesByDepartment();
+            printDepartmentsTable();
             break;
          case "Create New Department":
-            insertNewDepartment();
+            createNewDepartment();
             break;
          default:
             console.log("Oops! Invalid option.");
@@ -30,7 +30,10 @@ function supervisorView() {
    });
 } // supervisorView()
 
-function viewSalesByDepartment() {
+
+function printDepartmentsTable() {
+
+   let productTable = []; // will be loaded to print table
 
    // Connect to the database.
    let connection = mysql.createConnection({
@@ -50,16 +53,15 @@ function viewSalesByDepartment() {
    });
 
    // Extract total sales for each department from the products table.
-   let sqlCommand = `SELECT department_name, SUM(product_sales) AS amount
-         FROM products
-         INNER JOIN departments USING (department_name)
-         GROUP BY department_name;`
-
+   let sqlCommand = `SELECT departments.id, departments.department_name, departments.over_head_cost, SUM(products.product_sales) AS sales
+                     FROM products
+                     INNER JOIN departments USING(department_name)
+                     GROUP BY department_name;`
    connection.query(sqlCommand, function (err, res) {
       if (err) throw err;
 
       // Instantiate a table object.
-      let productTable = new table({
+      productTable = new table({
 
          head: ['ID', 'Department', 'Overhead Cost', 'Product Sales', 'Total Profit'],
          colWidths: [5, 25, 15, 17, 17]
@@ -68,10 +70,11 @@ function viewSalesByDepartment() {
       // load table
       res.forEach((r) => {
 
-         console.log(r);
-         let sales = parseFloat(r.amount).toFixed(2);
-         let profit = (parseFloat(r.overhead_cost) - sales).toFixed(2);
-         productTable.push([r.id, r.department_name, `$ ${r.overhead_cost}`, `$ ${sales}`, `$ ${profit}`]);
+         let sales = parseFloat(r.sales).toFixed(2);
+         let overhead = parseFloat(r.over_head_cost).toFixed(2);
+         let profit = (sales - overhead).toFixed(2);
+
+         productTable.push([r.id, r.department_name, overhead, sales, profit]);
       });
 
       // Print table.
@@ -81,9 +84,9 @@ function viewSalesByDepartment() {
       connection.end();
 
    });
-} // viewSalesByDepartment()
+} // printDepartmentsTable()
 
-function insertNewDepartment() {
+function createNewDepartment() {
 
    inquirer.prompt([{
       type: "input",
@@ -119,7 +122,7 @@ function insertNewDepartment() {
       connection.end();
    });
 
-} // insertNewDepartment()
+} // createNewDepartment()
 
 /* -----------------------------------------------------------------------
 // SUPERVISOR VIEW
