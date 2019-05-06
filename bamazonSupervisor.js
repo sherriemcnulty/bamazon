@@ -31,7 +31,7 @@ function supervisorView() {
 } // supervisorView()
 
 
-function printSupervisorTable() {
+function printSubervisorTable() {
 
    let productTable = []; // will be loaded to print table
 
