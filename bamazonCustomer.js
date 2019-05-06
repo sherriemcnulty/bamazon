@@ -41,7 +41,7 @@ function customerView() {
 
       res.forEach((r) => {
 
-         productTable.push([r.id, r.product_name, r.department_name, r.price, r.stock_quantity]);
+         productTable.push([r.id, r.product_name, r.department_name, `${r.price.toFixed(2)}`, r.stock_quantity]);
       });
       console.log(productTable.toString());
 

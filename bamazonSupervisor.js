@@ -28,7 +28,7 @@ function supervisorView() {
             break;
       }
    });
-}
+} // supervisorView()
 
 function viewSalesByDepartment() {
 
@@ -71,7 +71,7 @@ function viewSalesByDepartment() {
          console.log(r);
          let sales = parseFloat(r.amount).toFixed(2);
          let profit = (parseFloat(r.overhead_cost) - sales).toFixed(2);
-         productTable.push([r.id, r.department_name, `$${r.overhead_cost}`, `$${sales}`, `$${profit}`]);
+         productTable.push([r.id, r.department_name, `$ ${r.overhead_cost}`, `$ ${sales}`, `$ ${profit}`]);
       });
 
       // Print table.
@@ -81,7 +81,7 @@ function viewSalesByDepartment() {
       connection.end();
 
    });
-}
+} // viewSalesByDepartment()
 
 function insertNewDepartment() {
 
