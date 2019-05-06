@@ -85,8 +85,6 @@ function viewSalesByDepartment() {
 
 function insertNewDepartment() {
 
-   console.log("Create new department");
-
    inquirer.prompt([{
       type: "input",
       name: "department",
