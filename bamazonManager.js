@@ -29,7 +29,7 @@ function managerView() {
             addExisting();
             break;
          case "Add New Product":
-            insertNewProduct();
+            addNewProduct();
             break;
       }
    });
@@ -144,11 +144,11 @@ function updateQuantity(productId, newQty) {
       console.log("connected as id " + connection.threadId + "\n");
    });
 
-   let sql = `UPDATE products SET stock_quantity = ${newQty} WHERE id = ${productId}`;
+   let query = `UPDATE products SET stock_quantity = ${newQty} WHERE id = ${productId}`;
 
-   connection.query(sql, function (err, result) {
+   connection.query(query, function (err, result) {
       if (err) throw err;
-      console.log(result.affectedRows + " record(s) updated");
+      console.log(`New inventory was successfully added.`);
    });
 
    // Disconnect from the database.
@@ -158,7 +158,7 @@ function updateQuantity(productId, newQty) {
 
 // insertNewProduct(): Prompt for product name, department, price & quantity. Then insert it into the table. 
 //
-function insertNewProduct() {
+function insertNewProduct(departments) {
 
    inquirer.prompt([{
          type: "input",
@@ -169,7 +169,7 @@ function insertNewProduct() {
          type: "list",
          name: "department",
          message: "Department?",
-         choices: ["Books", "Electronics", "Home & Kitchen", "Add new product."]
+         choices: departments
       },
       {
          type: "input",
@@ -183,7 +183,7 @@ function insertNewProduct() {
       }
    ]).then(function (answer) {
 
-      // Insert new product into the products table.
+      // Connect to the database
       let connection = mysql.createConnection({
          host: "localhost",
          port: 3306,
@@ -192,6 +192,7 @@ function insertNewProduct() {
          database: "bamazon_db"
       });
 
+      // Insert new product.
       connection.query(
          "INSERT INTO products SET ?", {
             product_name: answer.product,
@@ -202,7 +203,7 @@ function insertNewProduct() {
          },
          function (err) {
             if (err) throw err;
-            console.log(`${answer.product} was added successfully!`);
+            console.log(`${answer.product} was successfully added!`);
          }
       );
 
@@ -211,3 +212,41 @@ function insertNewProduct() {
    });
 
 } // insertNewProduct()
+
+function addNewProduct() {
+
+   let departmentArr = [];
+
+   // Connect to the database.
+   let connection = mysql.createConnection({
+
+      host: "localhost",
+      port: 3306,
+      user: "root",
+      password: process.env.SQL_PASSWORD,
+      database: "bamazon_db"
+
+   });
+   connection.connect(function (err) {
+      if (err) throw err;
+      console.log("connected as id " + connection.threadId + "\n");
+   });
+
+   // Extract department names from the product table
+   let query = "SELECT department_name FROM departments";
+   connection.query(query, function (err, res) {
+
+      if (err) throw err;
+
+      res.forEach((r) => {
+
+         departmentArr.push(r.department_name);
+
+      });
+      insertNewProduct(departmentArr);
+   });
+
+   // Disconnect from the database.
+   connection.end();
+
+} // addNewProduct()
