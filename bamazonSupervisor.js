@@ -21,7 +21,7 @@ function supervisorView() {
             viewSalesByDepartment();
             break;
          case "Create New Department":
-            createNewDepartment();
+            insertNewDepartment();
             break;
          default:
             console.log("Oops! Invalid option.");
@@ -32,13 +32,96 @@ function supervisorView() {
 
 function viewSalesByDepartment() {
 
-   console.log("View sales by department.");
+   // Connect to the database.
+   let connection = mysql.createConnection({
+
+      host: "localhost",
+      port: 3306,
+      user: "root",
+      password: process.env.SQL_PASSWORD,
+      database: "bamazon_db"
+   });
+
+   connection.connect(function (err) {
+
+      if (err) throw err;
+
+      console.log("connected as id " + connection.threadId + "\n");
+   });
+
+   // Extract total sales for each department from the products table.
+   let sqlCommand = `SELECT department_name, SUM(product_sales) AS amount
+         FROM products
+         INNER JOIN departments USING (department_name)
+         GROUP BY department_name;`
+
+   connection.query(sqlCommand, function (err, res) {
+      if (err) throw err;
+
+      // Instantiate a table object.
+      let productTable = new table({
+
+         head: ['ID', 'Department', 'Overhead Cost', 'Product Sales', 'Total Profit'],
+         colWidths: [5, 25, 15, 17, 17]
+      });
+
+      // load table
+      res.forEach((r) => {
+
+         console.log(r);
+         let sales = parseFloat(r.amount).toFixed(2);
+         let profit = (parseFloat(r.overhead_cost) - sales).toFixed(2);
+         productTable.push([r.id, r.department_name, `$${r.overhead_cost}`, `$${sales}`, `$${profit}`]);
+      });
+
+      // Print table.
+      console.log(productTable.toString());
+
+      //Disconnect from the database.
+      connection.end();
+
+   });
 }
 
-function createNewDepartment() {
+function insertNewDepartment() {
 
    console.log("Create new department");
-}
+
+   inquirer.prompt([{
+      type: "input",
+      name: "department",
+      message: "Department name?"
+   }, {
+      type: "input",
+      name: "overhead",
+      message: "Overhead Cost?",
+   }]).then(function (answer) {
+
+      // Insert new department into the products table.
+      let connection = mysql.createConnection({
+         host: "localhost",
+         port: 3306,
+         user: "root",
+         password: process.env.SQL_PASSWORD,
+         database: "bamazon_db"
+      });
+
+      connection.query(
+         "INSERT INTO departments SET ?", {
+            department_name: answer.department,
+            over_head_cost: answer.overhead,
+         },
+         function (err) {
+            if (err) throw err;
+            console.log(`${answer.department} was added successfully!`);
+         }
+      );
+
+      // Disconnect from the database.
+      connection.end();
+   });
+
+} // insertNewDepartment()
 
 /* -----------------------------------------------------------------------
 // SUPERVISOR VIEW

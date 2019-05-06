@@ -111,7 +111,7 @@ function processOrder(id, quantity) {
          let totalPrice = (parseFloat(res[0].price) * parseFloat(quantity)).toFixed(2);
          let newStockQuantity = parseInt(res[0].stock_quantity) - parseInt(quantity);
          let newTotalSold = parseFloat(res[0].product_sales) + parseFloat(totalPrice);
-         updateProductsTable(id, newStockQuantity, newTotalSold);
+         updateSales(id, newStockQuantity, newTotalSold);
          console.log(`Your order of ${quantity} units at $${res[0].price} comes to $${totalPrice}.`);
       }
    });
@@ -121,11 +121,11 @@ function processOrder(id, quantity) {
 
 } // processOrder()
 
-// updateProductsTable(): Subtract the number ordered from the quantity in stock.
+// updateSales(): Subtract the number ordered from the quantity in stock.
 //                        Then update the database with the new stock total.
 //                        Finally, print the table for verification.
 //
-function updateProductsTable(productId, stockQuantity, totalSold) {
+function updateSales(productId, stockQuantity, totalSold) {
 
    // Connect to the database.
    let connection = mysql.createConnection({
@@ -145,4 +145,4 @@ function updateProductsTable(productId, stockQuantity, totalSold) {
    // Disconnect from the database.
    connection.end();
 
-} // updateProductsTable()
+} // updateSales()

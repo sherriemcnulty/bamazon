@@ -183,7 +183,7 @@ function insertNewProduct() {
       }
    ]).then(function (answer) {
 
-      // Get existing quantity the database.
+      // Insert new product into the products table.
       let connection = mysql.createConnection({
          host: "localhost",
          port: 3306,
