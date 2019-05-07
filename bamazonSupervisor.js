@@ -111,10 +111,11 @@ function createNewDepartment() {
          "INSERT INTO departments SET ?", {
             department_name: answer.department,
             over_head_cost: answer.overhead,
+            total_profit: '0'
          },
          function (err) {
             if (err) throw err;
-            console.log(`${answer.department} was added successfully!`);
+            console.log(`The ${answer.department} department was added successfully!`);
          }
       );
 

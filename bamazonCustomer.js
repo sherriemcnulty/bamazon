@@ -110,7 +110,7 @@ function processOrder(id, quantity) {
          // Update the database.
          let totalPrice = (parseFloat(res[0].price) * parseFloat(quantity)).toFixed(2);
          let newStockQuantity = parseInt(res[0].stock_quantity) - parseInt(quantity);
-         let newTotalSold = parseFloat(res[0].product_sales) + parseFloat(totalPrice);
+         let newTotalSold = parseFloat(res[0].products_sold) + parseFloat(totalPrice);
          updateSales(id, newStockQuantity, newTotalSold);
          console.log(`Your order of ${quantity} units at $${res[0].price} comes to $${totalPrice}.`);
       }
@@ -136,7 +136,7 @@ function updateSales(productId, stockQuantity, totalSold) {
       database: "bamazon_db"
    });
 
-   let sql = `UPDATE products SET stock_quantity = ${stockQuantity}, product_sales = ${totalSold} WHERE id = ${productId}`;
+   let sql = `UPDATE products SET stock_quantity = ${stockQuantity}, products_sold = ${totalSold} WHERE id = ${productId}`;
    connection.query(sql, function (err, result) {
       if (err) throw err;
       console.log("Thank you for your purchase.");

@@ -78,7 +78,7 @@ function printProductTable(option) {
             productTable.push([r.id, r.product_name, r.department_name, parseFloat(r.price).toFixed(2), r.stock_quantity]);
 
          } else if (r.stock_quantity < 6) {
-            productTable.push([r.id, r.product_name, r.department_name, r.price, r.stock_quantity]);
+            productTable.push([r.id, r.product_name, r.department_name, parseFloat(r.price).toFixed(2), r.stock_quantity]);
          }
       });
       console.log(productTable.toString());
@@ -199,7 +199,7 @@ function insertNewProduct(departments) {
             department_name: answer.department,
             price: parseFloat(answer.price).toFixed(2),
             stock_quantity: parseInt(answer.quantity),
-            product_sales: 0
+            products_sold: 0
          },
          function (err) {
             if (err) throw err;
