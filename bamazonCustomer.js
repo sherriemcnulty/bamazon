@@ -63,7 +63,7 @@ function customerPrompt() {
 
       type: "input",
       name: "id",
-      message: "What is the ID number of the item you want to buy?",
+      message: "\nWhat is the ID number of the item you want to buy?",
 
    }, {
 

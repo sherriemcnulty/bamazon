@@ -11,7 +11,7 @@ function supervisorView() {
    inquirer.prompt([{
       type: "list",
       name: "doWhat",
-      message: "What do you want to do?",
+      message: "\nWhat do you want to do?",
       choices: ["View Product Sales by Department", "Create New Department"]
    }]).then(function (data) {
 

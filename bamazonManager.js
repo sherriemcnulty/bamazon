@@ -13,7 +13,7 @@ function managerView() {
    inquirer.prompt([{
       type: "list",
       name: "doWhat",
-      message: "What do you want to do?",
+      message: "\nWhat do you want to do?",
       choices: ["View Products For Sale", "View Low Inventory", "Add More of An Existing Product", "Add New Product"]
    }]).then(function (data) {
 

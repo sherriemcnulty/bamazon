@@ -28,10 +28,10 @@ INSERT INTO products (product_name, department_name, price, stock_quantity, prod
 VALUES ("Akhenaten: History, Fantasy and Ancient Egypt ", "Books", 34.45, 5000, 0);
 
 INSERT INTO products (product_name, department_name, price, stock_quantity, products_sold)
-VALUES ("DIY Solar Power: How To Power Everything From The Sun", "Books", 9.99, 1000, 0);
+VALUES ("Home And Garden, Heirloom Seeds", "Garden", 15.95, 1000, 0);
 
 INSERT INTO products (product_name, department_name, price, stock_quantity, products_sold)
-VALUES ("The Grass Is Always Greener Over The Septic Tank", "Electronics", 19.00, 1000, 0);
+VALUES ("Open Seed Vault, Herb Garden Seeds", "Garden", 15.45, 1000, 0);
 
 INSERT INTO products (product_name, department_name, price, stock_quantity, products_sold)
 VALUES ("My First Lab Duo-Scope Microscope ", "Electronics", 12.80, 5000, 0);
@@ -46,7 +46,7 @@ INSERT INTO products (product_name, department_name, price, stock_quantity, prod
 VALUES ("Victoria GRN-101 Manual Grain Grinder with Low Hopper", "Home & Kitchen", 44.99, 2000, 0);
 
 INSERT INTO products (product_name, department_name, price, stock_quantity, products_sold)
-VALUES ("MIRA SAFETY Full Facepiece Reusable Respirator, Gas Masks", "Home & Kitchen", 314.87, 1000, 0);
+VALUES ("MIRA SAFETY Full Facepiece Reusable Respirator, Gas Masks", "Hardware", 314.87, 1000, 0);
 
 INSERT INTO products (product_name, department_name, price, stock_quantity, products_sold)
 VALUES ("Propur Traveler Countertop Gravity Water Filter System", "Home & Kitchen", 189.00, 3000, 0);
@@ -57,7 +57,13 @@ INSERT INTO departments (department_name, over_head_cost, total_profit)
 VALUES ("Books", 300.00, 0.00);
 
 INSERT INTO departments (department_name, over_head_cost, total_profit)
-VALUES ("Electronics", 400.00, 0.00);
+VALUES ("Garden", 600.00, 0.00);
+
+INSERT INTO departments (department_name, over_head_cost, total_profit)
+VALUES ("Electronics", 800.00, 0.00);
 
 INSERT INTO departments (department_name, over_head_cost, total_profit)
 VALUES ("Home & Kitchen", 500.00, 0.00);
+
+INSERT INTO departments (department_name, over_head_cost, total_profit)
+VALUES ("Hardware", 500.00, 0.00);
