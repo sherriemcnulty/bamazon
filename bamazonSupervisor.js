@@ -88,6 +88,8 @@ function printSubervisorTable() {
 
 function createNewDepartment() {
 
+   let department = "";
+
    inquirer.prompt([{
       type: "input",
       name: "department",
@@ -98,7 +100,9 @@ function createNewDepartment() {
       message: "Overhead Cost?",
    }]).then(function (answer) {
 
-      // Insert new department into the products table.
+      department = answer.department;
+
+      // Insert new department into the departments table.
       let connection = mysql.createConnection({
          host: "localhost",
          port: 3306,

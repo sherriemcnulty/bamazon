@@ -24,7 +24,7 @@ function customerView() {
 
       if (err) throw err;
 
-      console.log("connected as id " + connection.threadId + "\n");
+      console.log("Connected." + "\n");
    });
 
    // Instantiate a table object.
