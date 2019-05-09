@@ -2,9 +2,6 @@
 
 <a href="https://drive.google.com/file/d/1GSwrcGbPyM41ajKi4qkIaxJlbYyOd6ns/view?usp=sharing">Video Demo</a>
 
-
-In this activity, you'll be creating an Amazon-like storefront with the MySQL skills you learned this unit. The app will take in orders from customers and deplete stock from the store's inventory. As a bonus task, you can program your app to track product sales across your store's departments and then provide a summary of the highest-grossing departments in the store.
-
 Bamazon is an Amazon-like storefront that demonstrates MySQL skills. The app has three views: a Customer View, Manager View and Supervisor View.
 
 ##Customer View
@@ -55,7 +52,7 @@ The supervisor's option menu enables them to view product sales by department or
 
 ![Option menu](/images/supervisor1.jpg)
 
-"View Product Sales by Department" displays the over head costs, total sales and profits for each department.
+"View Product Sales by Department" displays a summary of over head costs, total sales and profits for each department.
 
 ![Table of department information](/images/supervisor2.jpg)
 
